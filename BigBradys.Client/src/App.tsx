@@ -1,21 +1,17 @@
-import Home from "./Pages/Home";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   NavLink
 } from "react-router-dom";
-import React, { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
+import React from 'react'
+import { Disclosure } from '@headlessui/react'
 import { SearchIcon } from '@heroicons/react/solid'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import {navigationItems} from "./Constants/NavigationItems";
 
 const profile = ['Your Profile', 'Settings', 'Sign out']
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
-}
 function App() {
   return (
       <Router>
@@ -29,8 +25,8 @@ function App() {
                           <div className="px-2 flex items-center lg:px-0">
                             <div className="flex-shrink-0">
                               <img
-                                  className="block h-8 w-8"
-                                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-300.svg"
+                                  className="block h-16"
+                                  src="/logo.png"
                                   alt="Workflow"
                               />
                             </div>
@@ -72,63 +68,6 @@ function App() {
                               )}
                             </Disclosure.Button>
                           </div>
-                          <div className="hidden lg:block lg:ml-4">
-                            <div className="flex items-center">
-                              <button className="bg-indigo-600 flex-shrink-0 rounded-full p-1 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white">
-                                <span className="sr-only">View notifications</span>
-                                <BellIcon className="h-6 w-6" aria-hidden="true" />
-                              </button>
-
-                              {/* Profile dropdown */}
-                              <Menu as="div" className="ml-3 relative flex-shrink-0">
-                                {({ open }) => (
-                                    <>
-                                      <div>
-                                        <Menu.Button className="bg-indigo-600 rounded-full flex text-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white">
-                                          <span className="sr-only">Open user menu</span>
-                                          <img
-                                              className="rounded-full h-8 w-8"
-                                              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                              alt=""
-                                          />
-                                        </Menu.Button>
-                                      </div>
-                                      <Transition
-                                          show={open}
-                                          as={Fragment}
-                                          enter="transition ease-out duration-100"
-                                          enterFrom="transform opacity-0 scale-95"
-                                          enterTo="transform opacity-100 scale-100"
-                                          leave="transition ease-in duration-75"
-                                          leaveFrom="transform opacity-100 scale-100"
-                                          leaveTo="transform opacity-0 scale-95"
-                                      >
-                                        <Menu.Items
-                                            static
-                                            className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                        >
-                                          {profile.map((item) => (
-                                              <Menu.Item key={item}>
-                                                {({ active }) => (
-                                                    <a
-                                                        href="#"
-                                                        className={classNames(
-                                                            active ? 'bg-gray-100' : '',
-                                                            'block py-2 px-4 text-sm text-gray-700'
-                                                        )}
-                                                    >
-                                                      {item}
-                                                    </a>
-                                                )}
-                                              </Menu.Item>
-                                          ))}
-                                        </Menu.Items>
-                                      </Transition>
-                                    </>
-                                )}
-                              </Menu>
-                            </div>
-                          </div>
                         </div>
                       </div>
 
@@ -138,24 +77,6 @@ function App() {
                               <NavLink className="text-white hover:bg-indigo-500 hover:bg-opacity-75 rounded-md py-2 px-3 text-sm font-medium" activeClassName="bg-indigo-700 text-white rounded-md py-2 px-3 text-sm font-medium" key={itemIdx} to={item.route} exact>{item.name}</NavLink>
                           )}
                         </div>
-                        <div className="pt-4 pb-3 border-t border-indigo-700">
-                          <div className="px-5 flex items-center">
-                            <div className="flex-shrink-0">
-                              <img
-                                  className="rounded-full h-10 w-10"
-                                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                  alt=""
-                              />
-                            </div>
-                            <div className="ml-3">
-                              <div className="text-base font-medium text-white">Tom Cook</div>
-                              <div className="text-sm font-medium text-indigo-300">tom@example.com</div>
-                            </div>
-                            <button className="ml-auto bg-indigo-600 flex-shrink-0 rounded-full p-1 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white">
-                              <span className="sr-only">View notifications</span>
-                              <BellIcon className="h-6 w-6" aria-hidden="true" />
-                            </button>
-                          </div>
                           <div className="mt-3 px-2 space-y-1">
                             {profile.map((item) => (
                                 <a
@@ -166,21 +87,16 @@ function App() {
                                   {item}
                                 </a>
                             ))}
+                            
                           </div>
-                        </div>
                       </Disclosure.Panel>
                     </>
                 )}
               </Disclosure>
-              <header className="py-10">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  <h1 className="text-3xl font-bold text-white">Dashboard</h1>
-                </div>
-              </header>
             </div>
 
             <main className="-mt-32">
-              <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
+              <div className="max-w-7xl mx-auto py-8 px-0 sm:px-6 lg:px-8">
                 {/* A <Switch> looks through its children <Route>s and renders the first one that matches the exact current URL.*/}
                 <Switch>
                   {navigationItems.map((item, itemIdx) =>

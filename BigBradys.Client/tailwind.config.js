@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
+const colors = require('tailwindcss/colors')
 module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   darkMode: false, // or 'media' or 'class'
@@ -7,6 +8,13 @@ module.exports = {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
+      colors: {
+        'warm-gray': colors.warmGray,
+        teal: colors.teal,
+      },
+      transitionProperty: {
+        'height': 'max-height',
+      }
     },
   },
   variants: {
@@ -14,5 +22,6 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/forms'),
+    require('@tailwindcss/line-clamp'),
   ],
 }
