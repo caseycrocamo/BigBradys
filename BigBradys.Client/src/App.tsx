@@ -15,8 +15,8 @@ function App() {
   return (
       <Router>
           <div className="min-h-screen bg-gray-100">
-            <div className="bg-indigo-600 pb-32">
-              <Disclosure as="nav" className="bg-indigo-600 border-b border-indigo-300 border-opacity-25 lg:border-none">
+            <div className="navbar pb-32">
+              <Disclosure as="nav" className="navbar border-b border-indigo-300 border-opacity-25 lg:border-none">
                 {({ open }) => (
                     <>
                       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
