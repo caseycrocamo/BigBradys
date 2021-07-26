@@ -11,6 +11,13 @@ module.exports = {
       colors: {
         'warm-gray': colors.warmGray,
         teal: colors.teal,
+        purple: {
+          lightest: "#FEF2FF",
+          light: "#833b8c",
+          DEFAULT: "#54085E",
+          dark: "#2a0034",
+          darkest: "#090010",
+        },
       },
       transitionProperty: {
         'height': 'max-height',
