@@ -29,17 +29,17 @@ function App() {
                                   alt="Workflow"
                               />
                             </div>
-                            <div className="hidden lg:block lg:ml-10">
+                            <div className="hidden md:block md:ml-10">
                               <div className="flex space-x-4">
                                 {navigationItems.map((item, itemIdx) =>
-                                    <NavLink className="text-white hover:bg-indigo-500 hover:bg-opacity-75 rounded-md py-2 px-3 text-sm font-medium" activeClassName="bg-indigo-700 text-white rounded-md py-2 px-3 text-sm font-medium" key={itemIdx} to={item.route} exact>{item.name}</NavLink>
+                                    <NavLink className="hover:bg-purple hover:bg-opacity-75 hover:text-white rounded-md py-2 px-3 text-sm font-medium" activeClassName="bg-purple text-white rounded-md py-2 px-2 text-sm font-medium" key={itemIdx} to={item.route} exact>{item.name}</NavLink>
                                 )}
                               </div>
                             </div>
                           </div>
-                          <div className="flex lg:hidden">
+                          <div className="flex md:hidden">
                             {/* Mobile menu button */}
-                            <Disclosure.Button className="bg-indigo-600 p-2 rounded-md inline-flex items-center justify-center text-indigo-200 hover:text-white hover:bg-indigo-500 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white">
+                            <Disclosure.Button className="bg-purple p-2 rounded-md inline-flex items-center justify-center text-purple-light hover:text-white hover:bg-purple hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-purple focus:ring-purple=lightest">
                               <span className="sr-only">Open main menu</span>
                               {open ? (
                                   <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -51,18 +51,18 @@ function App() {
                         </div>
                       </div>
 
-                      <Disclosure.Panel className="lg:hidden">
-                        <div className="px-2 pt-2 pb-3 space-y-1">
+                      <Disclosure.Panel className="lg:hidden space-x-2">
+                        <div className="px-4 pt-2 pb-3 space-y-1">
                           {navigationItems.map((item, itemIdx) =>
-                              <NavLink className="text-white hover:bg-indigo-500 hover:bg-opacity-75 rounded-md py-2 px-3 text-sm font-medium" activeClassName="bg-indigo-700 text-white rounded-md py-2 px-3 text-sm font-medium" key={itemIdx} to={item.route} exact>{item.name}</NavLink>
+                              <NavLink className="hover:bg-purple hover:bg-opacity-75 hover:text-white rounded-md py-2 px-2 mx-2 text-sm font-medium" activeClassName="bg-purple text-white rounded-md py-2 px-3 text-sm font-medium" key={itemIdx} to={item.route} exact>{item.name}</NavLink>
                           )}
                         </div>
-                          <div className="mt-3 px-2 space-y-1">
+                          <div className="mt-3 px-2 space-y-1 align-right">
                             {profile.map((item) => (
                                 <a
                                     key={item}
                                     href="#"
-                                    className="block rounded-md py-2 px-3 text-base font-medium text-white hover:bg-indigo-500 hover:bg-opacity-75"
+                                    className="block rounded-md py-2 px-3 text-base font-medium hover:bg-purple hover:text-white hover:bg-opacity-75"
                                 >
                                   {item}
                                 </a>
