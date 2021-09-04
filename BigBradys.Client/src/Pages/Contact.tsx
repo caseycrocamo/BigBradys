@@ -13,8 +13,7 @@ export default function Contact(){
                                 Get in touch
                             </h1>
                             <p className="mt-6 text-xl text-warm-gray-500 max-w-3xl">
-                                Vel nunc non ut montes, viverra tempor. Proin lectus nibh phasellus morbi non morbi. In elementum urna
-                                ut volutpat. Sagittis et vel et fermentum amet consequat.
+                                From howling our praises to barking at the mailman, we would love to hear from you!
                             </p>
                         </div>
                         <img className="w-1/4" src={"/Icons/basenji.svg"} />
@@ -132,8 +131,7 @@ export default function Contact(){
                                     </div>
                                     <h3 className="text-lg font-medium text-white">Contact information</h3>
                                     <p className="mt-6 text-base text-purple-lightest max-w-3xl">
-                                        Nullam risus blandit ac aliquam justo ipsum. Quam mauris volutpat massa dictumst amet. Sapien tortor
-                                        lacus arcu.
+                                        For business inquiries, call or email:
                                     </p>
                                     <dl className="mt-8 space-y-6">
                                         <dt>
@@ -141,19 +139,19 @@ export default function Contact(){
                                         </dt>
                                         <dd className="flex text-base text-purple-lightest">
                                             <PhoneIcon className="flex-shrink-0 w-6 h-6 text-purple-lightest" aria-hidden="true" />
-                                            <span className="ml-3">+1 (555) 123-4567</span>
+                                            <span className="ml-3">+1 (858) 442-0224</span>
                                         </dd>
                                         <dt>
                                             <span className="sr-only">Email</span>
                                         </dt>
                                         <dd className="flex text-base text-purple-lightest">
                                             <MailIcon className="flex-shrink-0 w-6 h-6 text-purple-lightest" aria-hidden="true" />
-                                            <span className="ml-3">support@workcation.com</span>
+                                            <span className="ml-3">chris@bigbradys.com</span>
                                         </dd>
                                     </dl>
                                     <ul className="mt-8 flex space-x-12" role="list">
                                         <li>
-                                            <a className="text-purple-lightest hover:text-white" href="#">
+                                            <a className="text-purple-lightest hover:text-white" href="https://facebook.com/bigbradys">
                                                 <span className="sr-only">Facebook</span>
                                                 <svg className="w-7 h-7" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
                                                     <path
@@ -165,7 +163,7 @@ export default function Contact(){
                                             </a>
                                         </li>
                                         <li>
-                                            <a className="text-purple-lightest hover:text-white" href="#">
+                                            <a className="text-purple-lightest hover:text-white" href="https://twitter.com/bigbradys">
                                                 <span className="sr-only">Twitter</span>
                                                 <svg className="w-7 h-7" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
                                                     <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
@@ -179,9 +177,23 @@ export default function Contact(){
                                 <div className="py-10 px-6 sm:px-10 lg:col-span-2 xl:p-12">
                                     <h3 className="text-lg font-medium text-warm-gray-900">Send us a message</h3>
                                     <form action="#" method="POST" className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
+                                        <div className="sm:col-span-2">
+                                            <label htmlFor="dog_name" className="block text-sm font-medium text-warm-gray-900">
+                                                Name
+                                            </label>
+                                            <div className="mt-1">
+                                                <input
+                                                    type="text"
+                                                    name="dog_name"
+                                                    id="dog_name"
+                                                    autoComplete="dog-name"
+                                                    className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
+                                                />
+                                            </div>
+                                        </div>
                                         <div>
                                             <label htmlFor="first_name" className="block text-sm font-medium text-warm-gray-900">
-                                                First name
+                                                Owner's First name
                                             </label>
                                             <div className="mt-1">
                                                 <input
@@ -195,7 +207,7 @@ export default function Contact(){
                                         </div>
                                         <div>
                                             <label htmlFor="last_name" className="block text-sm font-medium text-warm-gray-900">
-                                                Last name
+                                                Owner's Last name
                                             </label>
                                             <div className="mt-1">
                                                 <input
@@ -209,7 +221,7 @@ export default function Contact(){
                                         </div>
                                         <div>
                                             <label htmlFor="email" className="block text-sm font-medium text-warm-gray-900">
-                                                Email
+                                                Owner's Email
                                             </label>
                                             <div className="mt-1">
                                                 <input
@@ -224,11 +236,11 @@ export default function Contact(){
                                         <div>
                                             <div className="flex justify-between">
                                                 <label htmlFor="phone" className="block text-sm font-medium text-warm-gray-900">
-                                                    Phone
+                                                    Owner's Phone Number
                                                 </label>
                                                 <span id="phone-optional" className="text-sm text-warm-gray-500">
-                          Optional
-                        </span>
+                                                  Optional
+                                                </span>
                                             </div>
                                             <div className="mt-1">
                                                 <input
