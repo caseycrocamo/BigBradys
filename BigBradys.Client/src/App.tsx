@@ -16,11 +16,11 @@ function App() {
       <Router>
           <div className="min-h-screen bg-gray-100">
             <div className="navbar pb-32">
-              <Disclosure as="nav" className="navbar border-b border-indigo-300 border-opacity-25 lg:border-none">
+              <Disclosure as="nav" className="navbar">
                 {({ open }) => (
                     <>
                       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
-                        <div className="relative h-16 flex items-center justify-between lg:border-b lg:border-indigo-400 lg:border-opacity-25">
+                        <div className="relative h-16 flex items-center justify-between">
                           <div className="px-2 flex items-center lg:px-0">
                             <div className="flex-shrink-0">
                               <img
