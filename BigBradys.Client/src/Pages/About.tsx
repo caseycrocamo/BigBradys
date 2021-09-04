@@ -1,5 +1,4 @@
-﻿import { DotsVerticalIcon } from '@heroicons/react/solid'
-import Card from "../Components/Card";
+﻿import Card from "../Components/Card";
 import React from "react";
 import IngredientList from "../Components/IngredientList";
 import {MeatIngredientList} from "../Constants/Ingredients/MeatIngredientList";
@@ -19,6 +18,7 @@ function classNames(...classes : any) {
 export default function About(){
     return (
         <div>
+
             <div className="px-4">
                 <div className="relative bg-purple-dark">
                     <div className="absolute inset-0">
@@ -27,7 +27,7 @@ export default function About(){
                             src="https://images.unsplash.com/photo-1477868433719-7c5f2731b310"
                             alt=""
                         />
-                        <div className="absolute inset-0 bg-purple-dark mix-blend-multiply bg-opacity-70" aria-hidden="true" />
+                        <div className="absolute inset-0 bg-purple-dark mix-blend-multiply bg-opacity-40" aria-hidden="true" />
                     </div>
                     <div className="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
                         <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">

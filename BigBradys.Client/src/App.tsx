@@ -15,7 +15,7 @@ function App() {
   return (
       <Router>
           <div className="min-h-screen bg-purple bg-opacity-70">
-            <div className="navbar pb-24 shadow-md">
+            <div className="navbar pb-24 shadow">
               <Disclosure as="nav" className="navbar">
                 {({ open }) => (
                     <>
