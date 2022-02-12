@@ -81,7 +81,7 @@ function App() {
                 <Switch>
                   {navigationItems.map((item, itemIdx) =>
                       <Route exact path={item.route} key={itemIdx}>
-                        {item.component}
+                        {< item.component />}
                       </Route>
                   )}
                 </Switch>
