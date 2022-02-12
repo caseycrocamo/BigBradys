@@ -16,7 +16,6 @@
                             <polygon points="50,0 100,0 50,100 0,100"/>
                         </svg>
 
-
                         <main className="mx-auto max-w-7xl px-8 sm:px-6">
                             <div className="sm:text-center lg:text-left">
                                 <h1 className="text-4xl md:pt-10 tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">

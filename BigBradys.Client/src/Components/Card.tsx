@@ -2,6 +2,9 @@
 export default function Card(props:any){
     let header:string = props.header;
     let body:any = props.body;
+    console.log(typeof(props));
+    console.log(typeof(body));
+    console.log(typeof((<div></div>)));
     return (
         <div className="max-w-7xl py-6">
             <div className="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200">
