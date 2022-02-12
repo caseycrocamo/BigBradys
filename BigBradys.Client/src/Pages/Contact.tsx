@@ -1,7 +1,22 @@
-﻿import React from "react";
+﻿import React, { useState } from "react";
 import { MailIcon, PhoneIcon } from '@heroicons/react/outline'
+import ContactForm from '../Domain/ContactForm';
+import {submitContactForm} from '../Service/contactForm';
 
-export default function Contact(){
+export default function Contact() {
+    const [petName, setPetName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [subject, setSubject] = useState('');
+    const [message, setMessage] = useState('');
+
+    const handleSubmit = (e:any) => {
+        e.preventDefault();
+        const contactForm = new ContactForm(firstName, lastName, petName, email, phoneNumber, subject, message);
+        submitContactForm(contactForm);
+    }
     return (
         <div className="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
             <div className="border-4 border-dashed border-gray-200 rounded-lg">
@@ -176,7 +191,7 @@ export default function Contact(){
                                 {/* Contact form */}
                                 <div className="py-10 px-6 sm:px-10 lg:col-span-2 xl:p-12">
                                     <h3 className="text-lg font-medium text-warm-gray-900">Send us a message</h3>
-                                    <form action="#" method="POST" className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
+                                    <form action="#" className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8" onSubmit={e => handleSubmit(e)}>
                                         <div className="sm:col-span-2">
                                             <label htmlFor="dog_name" className="block text-sm font-medium text-warm-gray-900">
                                                 Name
@@ -188,6 +203,8 @@ export default function Contact(){
                                                     id="dog_name"
                                                     autoComplete="dog-name"
                                                     className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
+                                                    value={petName}
+                                                    onChange={e => setPetName(e.target.value)}
                                                 />
                                             </div>
                                         </div>
@@ -202,6 +219,8 @@ export default function Contact(){
                                                     id="first_name"
                                                     autoComplete="given-name"
                                                     className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
+                                                    value={firstName}
+                                                    onChange={e => setFirstName(e.target.value)}
                                                 />
                                             </div>
                                         </div>
@@ -216,6 +235,8 @@ export default function Contact(){
                                                     id="last_name"
                                                     autoComplete="family-name"
                                                     className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
+                                                    value={lastName}
+                                                    onChange={e => setLastName(e.target.value)}
                                                 />
                                             </div>
                                         </div>
@@ -230,6 +251,8 @@ export default function Contact(){
                                                     type="email"
                                                     autoComplete="email"
                                                     className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
+                                                    value={email}
+                                                    onChange={e => setEmail(e.target.value)}
                                                 />
                                             </div>
                                         </div>
@@ -250,6 +273,8 @@ export default function Contact(){
                                                     autoComplete="tel"
                                                     className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
                                                     aria-describedby="phone-optional"
+                                                    value={phoneNumber}
+                                                    onChange={e => setPhoneNumber(e.target.value)}
                                                 />
                                             </div>
                                         </div>
@@ -263,6 +288,8 @@ export default function Contact(){
                                                     name="subject"
                                                     id="subject"
                                                     className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
+                                                    value={subject}
+                                                    onChange={e => setSubject(e.target.value)}
                                                 />
                                             </div>
                                         </div>
@@ -272,18 +299,19 @@ export default function Contact(){
                                                     Message
                                                 </label>
                                                 <span id="message-max" className="text-sm text-warm-gray-500">
-                          Max. 500 characters
-                        </span>
+                                                    Max. 500 characters
+                                                </span>
                                             </div>
                                             <div className="mt-1">
-                        <textarea
-                            id="message"
-                            name="message"
-                            rows={4}
-                            className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border border-warm-gray-300 rounded-md"
-                            aria-describedby="message-max"
-                            defaultValue={''}
-                        />
+                                                <textarea
+                                                    id="message"
+                                                    name="message"
+                                                    rows={4}
+                                                    className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border border-warm-gray-300 rounded-md"
+                                                    aria-describedby="message-max"
+                                                    value={message}
+                                                    onChange={e => setMessage(e.target.value)}
+                                                />
                                             </div>
                                         </div>
                                         <div className="sm:col-span-2 sm:flex sm:justify-end">
