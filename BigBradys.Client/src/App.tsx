@@ -4,15 +4,27 @@ import {
   Route,
   NavLink
 } from "react-router-dom";
-import React from 'react'
+import React, { useState } from 'react'
 import { Disclosure } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
-import {navigationItems} from "./Constants/NavigationItems";
+import Alert from "./Components/Alert";
+import navigationItem from "./Constants/NavigationItem";
+import Contact from "./Pages/Contact";
+import Home from "./Pages/Home";
+import About from "./Pages/About";
 
 const profile = ['Your Profile', 'Settings', 'Sign out']
 
+
 function App() {
+  const [alertOpen, setAlertOpen] = useState(false);
+  const navigationItems:navigationItem[] = [
+    new navigationItem("Home", "/", (<Home />)),
+    new navigationItem("Our Food", "/about", (<About />)),
+    new navigationItem("Contact Us", "/contact", (<Contact setAlertOpen={setAlertOpen}/>))
+];
   return (
+      <div>
       <Router>
           <div className="min-h-screen bg-purple bg-opacity-70">
             <div className="navbar pb-24 shadow">
@@ -81,7 +93,7 @@ function App() {
                 <Switch>
                   {navigationItems.map((item, itemIdx) =>
                       <Route exact path={item.route} key={itemIdx}>
-                        {< item.component />}
+                        {item.jsx}
                       </Route>
                   )}
                 </Switch>
@@ -89,6 +101,9 @@ function App() {
             </main>
           </div>
       </Router>
+      {alertOpen && (<Alert />)}
+    
+    </div>
   );
 }
 

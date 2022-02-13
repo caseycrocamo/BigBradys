@@ -2,8 +2,9 @@
 import { MailIcon, PhoneIcon } from '@heroicons/react/outline'
 import ContactForm from '../Domain/ContactForm';
 import {submitContactForm} from '../Service/contactForm';
+import apiResponse from "../Domain/apiResponse";
 
-export default function Contact() {
+export default function Contact(props: any) {
     const [petName, setPetName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -11,11 +12,22 @@ export default function Contact() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
+    console.log(props.setAlertOpen);
+    const setAlertOpen = props.setAlertOpen;
 
     const handleSubmit = (e:any) => {
         e.preventDefault();
         const contactForm = new ContactForm(firstName, lastName, petName, email, phoneNumber, subject, message);
-        submitContactForm(contactForm);
+        submitContactForm(contactForm).then(function (response:any) {
+            if(response.status === 200){ 
+                console.log(response);
+                setAlertOpen(true);
+            }
+        })
+        .catch(function (error:any) {
+            alert(error);
+            return new apiResponse(false, null);
+        });        
     }
     return (
         <div className="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
