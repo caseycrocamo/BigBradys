@@ -26,16 +26,15 @@ app.use(cors());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-app.post('/api/contactform', function(req, res) {
-    let serviceResponse = contactFormHandler.handleContactFormSubmission(req);
+app.post('/api/contactform', async function(req, res) {
+    let serviceResponse = await contactFormHandler.handleContactFormSubmission(req.body);
     if(serviceResponse.successful){
         res.statusCode = 200;
-        res.send("successful");
     }
     else {
         res.statusCode = 500;
-        res.send("oops");
     }
+    res.send(serviceResponse.data);
 });
 
 // catch 404 and forward to error handler
