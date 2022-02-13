@@ -3,6 +3,7 @@ import { MailIcon, PhoneIcon } from '@heroicons/react/outline'
 import ContactForm from '../Domain/ContactForm';
 import {submitContactForm} from '../Service/contactForm';
 import apiResponse from "../Domain/apiResponse";
+import { alertType } from "../Domain/enum";
 
 export default function Contact(props: any) {
     const [petName, setPetName] = useState('');
@@ -14,6 +15,7 @@ export default function Contact(props: any) {
     const [message, setMessage] = useState('');
     console.log(props.setAlertOpen);
     const setAlertOpen = props.setAlertOpen;
+    const setAlertType = props.setAlertType;
 
     const handleSubmit = (e:any) => {
         e.preventDefault();
@@ -21,6 +23,7 @@ export default function Contact(props: any) {
         submitContactForm(contactForm).then(function (response:any) {
             if(response.status === 200){ 
                 console.log(response);
+                setAlertType(alertType.success);
                 setAlertOpen(true);
             }
         })

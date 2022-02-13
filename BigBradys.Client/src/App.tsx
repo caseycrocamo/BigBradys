@@ -12,16 +12,18 @@ import navigationItem from "./Constants/NavigationItem";
 import Contact from "./Pages/Contact";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
+import { alertType as alertTypes } from './Domain/enum';
 
 const profile = ['Your Profile', 'Settings', 'Sign out']
 
 
 function App() {
   const [alertOpen, setAlertOpen] = useState(false);
+  const [alertType, setAlertType] = useState(null);
   const navigationItems:navigationItem[] = [
     new navigationItem("Home", "/", (<Home />)),
     new navigationItem("Our Food", "/about", (<About />)),
-    new navigationItem("Contact Us", "/contact", (<Contact setAlertOpen={setAlertOpen}/>))
+    new navigationItem("Contact Us", "/contact", (<Contact setAlertOpen={setAlertOpen} setAlertType={setAlertType}/>))
 ];
   return (
       <div>
@@ -101,7 +103,7 @@ function App() {
             </main>
           </div>
       </Router>
-      {alertOpen && (<Alert />)}
+      {alertOpen && (<Alert alertType={alertType}/>)}
     
     </div>
   );

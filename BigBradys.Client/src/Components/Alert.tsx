@@ -1,8 +1,22 @@
-import { ExclamationIcon } from '@heroicons/react/solid'
-
-export default function Alert() {
+import { ExclamationIcon } from '@heroicons/react/solid';
+import { useState } from 'react';
+import { alertSettings } from '../Constants/alertSettings';
+import { alertType } from '../Domain/enum';
+export default function Alert(props:any) {
+  const type:alertType = props.alertType;
+  console.log(type);
+  let settings:any;
+  switch(type){
+    case alertType.success:
+      settings = alertSettings.success;
+      break;
+    case alertType.failure:
+      settings = alertSettings.failure;
+      break;
+  }
+  let containerClass = `rounded-md bg-${settings.backgroundColor}-50 p-4`;
   return (
-    <div className="rounded-md bg-yellow-50 p-4">
+    <div className={containerClass}>
       <div className="flex">
         <div className="flex-shrink-0">
           <ExclamationIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
