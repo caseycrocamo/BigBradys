@@ -13,6 +13,7 @@ import Contact from "./Pages/Contact";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
 import { alertType as alertTypes } from './Domain/enum';
+import Products from "./Pages/Products";
 
 const profile = ['Your Profile', 'Settings', 'Sign out']
 
@@ -22,8 +23,9 @@ function App() {
   const [alertType, setAlertType] = useState(null);
   const navigationItems:navigationItem[] = [
     new navigationItem("Home", "/", (<Home />)),
+    new navigationItem("Products", "/products", (<Products />)),
     new navigationItem("Our Food", "/about", (<About />)),
-    new navigationItem("Contact Us", "/contact", (<Contact setAlertOpen={setAlertOpen} setAlertType={setAlertType}/>))
+    new navigationItem("Contact Us", "/contact", (<Contact setAlertOpen={setAlertOpen} setAlertType={setAlertType}/>)),
 ];
   return (
       <div>
@@ -46,14 +48,14 @@ function App() {
                             <div className="hidden md:block md:ml-10">
                               <div className="flex space-x-4">
                                 {navigationItems.map((item, itemIdx) =>
-                                    <NavLink className="hover:bg-purple hover:bg-opacity-75 hover:text-white rounded-md py-2 px-3 text-sm font-medium" activeClassName="bg-purple text-white rounded-md py-2 px-2 text-sm font-medium" key={itemIdx} to={item.route} exact>{item.name}</NavLink>
+                                    <NavLink className="hover:bg-purple hover:bg-opacity-75 hover:text-white rounded-md py-2 px-3 text-sm font-medium" activeClassName="bg-purple hover:bg-opacity-75 text-white rounded-md py-2 px-2 text-sm font-medium" key={itemIdx} to={item.route} exact>{item.name}</NavLink>
                                 )}
                               </div>
                             </div>
                           </div>
                           <div className="flex md:hidden">
                             {/* Mobile menu button */}
-                            <Disclosure.Button className="bg-purple p-2 rounded-md inline-flex items-center justify-center text-white hover:text-white hover:bg-purple hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-purple focus:ring-purple=lightest">
+                            <Disclosure.Button className="bg-purple hover:bg-opacity-75 p-2 rounded-md inline-flex items-center justify-center text-white hover:text-white hover:bg-purple hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-purple focus:ring-purple=lightest">
                               <span className="sr-only">Open main menu</span>
                               {open ? (
                                   <XIcon className="block h-6 w-6" aria-hidden="true" />

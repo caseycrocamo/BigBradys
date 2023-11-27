@@ -37,7 +37,7 @@ export default function Contact(props: any) {
             <div className="border-4 border-dashed border-gray-200 rounded-lg">
                 {/* Header */}
                 <div className="bg-warm-gray-50">
-                    <div className="py-16 px-4 sm:px-6 lg:px-8 flex">
+                    <div className="pt-16 px-4 sm:px-6 lg:px-8 flex">
                         <div className="relative z-10 max-w-7xl mx-auto pr-4 ">
                             <h1 className="text-4xl font-extrabold tracking-tight text-warm-gray-900 sm:text-5xl lg:text-6xl">
                                 Get in touch
