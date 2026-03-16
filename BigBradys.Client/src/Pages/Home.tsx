@@ -5,7 +5,7 @@
             <div className="bg-white rounded-lg shadow pt-6 lg:pb-6 lg:px-5 max-w-7xl">
                 <div className="relative overflow-hidden lg:border-4 border-dashed border-gray-200 rounded-lg">
                     <div
-                        className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+                        className="relative z-10 pb-8 bg-white lg:max-w-2xl lg:w-full ">
                         <svg
                             className="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2"
                             fill="currentColor"
@@ -16,32 +16,29 @@
                             <polygon points="50,0 100,0 50,100 0,100"/>
                         </svg>
 
-                        <main className="mx-auto max-w-7xl px-8 sm:px-6">
+                        <main className="mx-auto max-w-7xl px-8 sm:px-6 pb-2">
                             <div className="sm:text-center lg:text-left">
                                 <h1 className="text-4xl md:pt-10 tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                                     <span className="block xl:inline">Feed your best friend</span>{' '}
                                     <span className="block text-purple-light xl:inline">the best food.</span>
                                 </h1>
-                                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 pt-2">
                                     Big Brady's hand-made dog food. Made with meat, veggies and love ♡.
                                 </p>
-                                <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                                    <div className="rounded-md shadow">
-                                        <a
-                                            href="#"
-                                            className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-light hover:bg-purple md:py-4 md:text-lg md:px-10"
-                                        >
-                                            Order now!
-                                        </a>
-                                    </div>
-                                    <div className="rounded-md shadow mt-5 sm:mt-0 sm:ml-6">
-                                        <a
-                                            href="/about"
-                                            className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-purple bg-white hover:bg-gray-100 md:py-4 md:text-lg md:px-10"
-                                        >
-                                            Learn more
-                                        </a>
-                                    </div>
+                                <a
+                                    href="/about"
+                                    className="inline-flex items-center text-purple-light font-medium hover:underline"
+                                >
+                                    Learn more about our food →
+                                </a>
+                                <hr className="mt-8 mb-6 border-3 border-purple-light opacity-60 max-w-md border-dashed" />
+                                <div>
+                                    <h2 className="text-3xl sm:text-3xl font-extrabold text-purple-light mb-3 mt-3">
+                                        Ready to join the Big Brady's family?
+                                    </h2>
+                                    <p className="text-gray-600 mb-4">
+                                        Call or text Chris: <a href="tel:8584420224" className="text-purple-light font-semibold hover:underline">(858) 442-0224</a>
+                                    </p>
                                 </div>
                             </div>
                         </main>
