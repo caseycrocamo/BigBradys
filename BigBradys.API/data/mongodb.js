@@ -1,5 +1,7 @@
 const { MongoClient } = require('mongodb');
-const uri = "mongodb+srv://caseycrocamo:xdYuaUX9YdEicuI0dq@bigbradys.vu0p8.mongodb.net/bigbradys?retryWrites=true&w=majority";
+// Use MONGOPASSWORD from environment variable (Fly secret)
+const password = process.env.MONGOPASSWORD;
+const uri = `mongodb+srv://caseycrocamo:${password}@bigbradys.ru8200c.mongodb.net/?appName=BigBradys`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 

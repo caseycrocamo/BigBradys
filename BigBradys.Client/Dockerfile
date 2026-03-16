@@ -42,5 +42,6 @@ COPY --from=build /app /app
 # Install serve globally (if not bundled, fallback to local)
 RUN npm install --omit=dev && npm install -g serve || true
 EXPOSE 3000
+ENV REACT_APP_API_ROOT=https://bigbradys-api.fly.dev/api 
 # Use PORT env variable if set, otherwise default to 3000
 CMD ["sh", "-c", "serve -s build -l \"${PORT:-3000}\""]
