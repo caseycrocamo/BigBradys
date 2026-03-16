@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.navbar {
+    background: url(./Images/handmadepaper.png) repeat;
+}
+
+body {
+    min-height: 100vh;
+}
+
+#root, html {
+    background-color: rgb(241,243,244);
+}
