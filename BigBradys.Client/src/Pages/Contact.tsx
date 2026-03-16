@@ -13,7 +13,7 @@ export default function Contact(props: any) {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
-    console.log(props.setAlertOpen);
+    const [submitted, setSubmitted] = useState(false);
     const setAlertOpen = props.setAlertOpen;
     const setAlertType = props.setAlertType;
 
@@ -22,9 +22,9 @@ export default function Contact(props: any) {
         const contactForm = new ContactForm(firstName, lastName, petName, email, phoneNumber, subject, message);
         submitContactForm(contactForm).then(function (response:any) {
             if(response.status === 200){ 
-                console.log(response);
                 setAlertType(alertType.success);
                 setAlertOpen(true);
+                setSubmitted(true);
             }
         })
         .catch(function (error:any) {
@@ -203,141 +203,175 @@ export default function Contact(props: any) {
                                     </ul>
                                 </div>
 
-                                {/* Contact form */}
+                                {/* Contact form or thank you message */}
                                 <div className="py-10 px-6 sm:px-10 lg:col-span-2 xl:p-12">
-                                    <h3 className="text-lg font-medium text-warm-gray-900">Send us a message</h3>
-                                    <form action="#" className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8" onSubmit={e => handleSubmit(e)}>
-                                        <div className="sm:col-span-2">
-                                            <label htmlFor="dog_name" className="block text-sm font-medium text-warm-gray-900">
-                                                Name
-                                            </label>
-                                            <div className="mt-1">
-                                                <input
-                                                    type="text"
-                                                    name="dog_name"
-                                                    id="dog_name"
-                                                    autoComplete="dog-name"
-                                                    className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
-                                                    value={petName}
-                                                    onChange={e => setPetName(e.target.value)}
-                                                />
+                                    {submitted ? (
+                                        <div className="max-w-lg mx-auto text-center">
+                                            <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-b from-purple to-purple-dark mb-8">
+                                                <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                                </svg>
                                             </div>
+                                            <h3 className="text-3xl font-extrabold tracking-tight text-gray-900 mb-4">
+                                                Message Received!
+                                            </h3>
+                                            <p className="text-lg text-gray-500 mb-8">
+                                                Thanks for getting in touch. We'll review your message and get back to you within 1-2 business days.
+                                            </p>
+                                            <hr className="border-gray-200 mb-8" />
+                                            <p className="text-base text-gray-500">
+                                                In the meantime, feel free to check out our{' '}
+                                                <a href="/products" className="text-purple-light font-medium hover:underline">
+                                                    products
+                                                </a>{' '}
+                                                or follow us on social media.
+                                            </p>
                                         </div>
-                                        <div>
-                                            <label htmlFor="first_name" className="block text-sm font-medium text-warm-gray-900">
-                                                Owner's First name
-                                            </label>
-                                            <div className="mt-1">
-                                                <input
-                                                    type="text"
-                                                    name="first_name"
-                                                    id="first_name"
-                                                    autoComplete="given-name"
-                                                    className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
-                                                    value={firstName}
-                                                    onChange={e => setFirstName(e.target.value)}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label htmlFor="last_name" className="block text-sm font-medium text-warm-gray-900">
-                                                Owner's Last name
-                                            </label>
-                                            <div className="mt-1">
-                                                <input
-                                                    type="text"
-                                                    name="last_name"
-                                                    id="last_name"
-                                                    autoComplete="family-name"
-                                                    className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
-                                                    value={lastName}
-                                                    onChange={e => setLastName(e.target.value)}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label htmlFor="email" className="block text-sm font-medium text-warm-gray-900">
-                                                Owner's Email
-                                            </label>
-                                            <div className="mt-1">
-                                                <input
-                                                    id="email"
-                                                    name="email"
-                                                    type="email"
-                                                    autoComplete="email"
-                                                    className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
-                                                    value={email}
-                                                    onChange={e => setEmail(e.target.value)}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div className="flex justify-between">
-                                                <label htmlFor="phone" className="block text-sm font-medium text-warm-gray-900">
-                                                    Owner's Phone Number
-                                                </label>
-                                                <span id="phone-optional" className="text-sm text-warm-gray-500">
-                                                  Optional
-                                                </span>
-                                            </div>
-                                            <div className="mt-1">
-                                                <input
-                                                    type="text"
-                                                    name="phone"
-                                                    id="phone"
-                                                    autoComplete="tel"
-                                                    className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
-                                                    aria-describedby="phone-optional"
-                                                    value={phoneNumber}
-                                                    onChange={e => setPhoneNumber(e.target.value)}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="sm:col-span-2">
-                                            <label htmlFor="subject" className="block text-sm font-medium text-warm-gray-900">
-                                                Subject
-                                            </label>
-                                            <div className="mt-1">
-                                                <input
-                                                    type="text"
-                                                    name="subject"
-                                                    id="subject"
-                                                    className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
-                                                    value={subject}
-                                                    onChange={e => setSubject(e.target.value)}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="sm:col-span-2">
-                                            <div className="flex justify-between">
-                                                <label htmlFor="message" className="block text-sm font-medium text-warm-gray-900">
-                                                    Message
-                                                </label>
-                                                <span id="message-max" className="text-sm text-warm-gray-500">
-                                                    Max. 500 characters
-                                                </span>
-                                            </div>
-                                            <div className="mt-1">
-                                                <textarea
-                                                    id="message"
-                                                    name="message"
-                                                    rows={4}
-                                                    className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border border-warm-gray-300 rounded-md"
-                                                    aria-describedby="message-max"
-                                                    value={message}
-                                                    onChange={e => setMessage(e.target.value)}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="sm:col-span-2 sm:flex sm:justify-end">
-                                            <button
-                                                type="submit"
-                                                className="mt-2 w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-purple-light hover:bg-purple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-light sm:w-auto"
-                                            >
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </form>
+                                    ) : (
+                                        <>
+                                            <h3 className="text-lg font-medium text-warm-gray-900">Send us a message</h3>
+                                            <form action="#" className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8" onSubmit={handleSubmit}>
+                                                {/* Name */}
+                                                <div className="sm:col-span-2">
+                                                    <label htmlFor="dog_name" className="block text-sm font-medium text-warm-gray-900">
+                                                        Name
+                                                    </label>
+                                                    <div className="mt-1">
+                                                        <input
+                                                            type="text"
+                                                            name="dog_name"
+                                                            id="dog_name"
+                                                            autoComplete="dog-name"
+                                                            className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
+                                                            value={petName}
+                                                            onChange={e => setPetName(e.target.value)}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                {/* Owner's First name */}
+                                                <div>
+                                                    <label htmlFor="first_name" className="block text-sm font-medium text-warm-gray-900">
+                                                        Owner's First name
+                                                    </label>
+                                                    <div className="mt-1">
+                                                        <input
+                                                            type="text"
+                                                            name="first_name"
+                                                            id="first_name"
+                                                            autoComplete="given-name"
+                                                            className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
+                                                            value={firstName}
+                                                            onChange={e => setFirstName(e.target.value)}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                {/* Owner's Last name */}
+                                                <div>
+                                                    <label htmlFor="last_name" className="block text-sm font-medium text-warm-gray-900">
+                                                        Owner's Last name
+                                                    </label>
+                                                    <div className="mt-1">
+                                                        <input
+                                                            type="text"
+                                                            name="last_name"
+                                                            id="last_name"
+                                                            autoComplete="family-name"
+                                                            className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
+                                                            value={lastName}
+                                                            onChange={e => setLastName(e.target.value)}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                {/* Email */}
+                                                <div>
+                                                    <label htmlFor="email" className="block text-sm font-medium text-warm-gray-900">
+                                                        Owner's Email
+                                                    </label>
+                                                    <div className="mt-1">
+                                                        <input
+                                                            id="email"
+                                                            name="email"
+                                                            type="email"
+                                                            autoComplete="email"
+                                                            className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
+                                                            value={email}
+                                                            onChange={e => setEmail(e.target.value)}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                {/* Phone Number */}
+                                                <div>
+                                                    <div className="flex justify-between">
+                                                        <label htmlFor="phone" className="block text-sm font-medium text-warm-gray-900">
+                                                            Owner's Phone Number
+                                                        </label>
+                                                        <span id="phone-optional" className="text-sm text-warm-gray-500">
+                                                          Optional
+                                                        </span>
+                                                    </div>
+                                                    <div className="mt-1">
+                                                        <input
+                                                            type="text"
+                                                            name="phone"
+                                                            id="phone"
+                                                            autoComplete="tel"
+                                                            className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
+                                                            aria-describedby="phone-optional"
+                                                            value={phoneNumber}
+                                                            onChange={e => setPhoneNumber(e.target.value)}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                {/* Subject */}
+                                                <div className="sm:col-span-2">
+                                                    <label htmlFor="subject" className="block text-sm font-medium text-warm-gray-900">
+                                                        Subject
+                                                    </label>
+                                                    <div className="mt-1">
+                                                        <input
+                                                            type="text"
+                                                            name="subject"
+                                                            id="subject"
+                                                            className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border-warm-gray-300 rounded-md"
+                                                            value={subject}
+                                                            onChange={e => setSubject(e.target.value)}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                {/* Message */}
+                                                <div className="sm:col-span-2">
+                                                    <div className="flex justify-between">
+                                                        <label htmlFor="message" className="block text-sm font-medium text-warm-gray-900">
+                                                            Message
+                                                        </label>
+                                                        <span id="message-max" className="text-sm text-warm-gray-500">
+                                                            Max. 500 characters
+                                                        </span>
+                                                    </div>
+                                                    <div className="mt-1">
+                                                        <textarea
+                                                            id="message"
+                                                            name="message"
+                                                            rows={4}
+                                                            className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-purple-light focus:border-purple border border-warm-gray-300 rounded-md"
+                                                            aria-describedby="message-max"
+                                                            value={message}
+                                                            onChange={e => setMessage(e.target.value)}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                {/* Submit Button */}
+                                                <div className="sm:col-span-2 sm:flex sm:justify-end">
+                                                    <button
+                                                        type="submit"
+                                                        className="mt-2 w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-purple-light hover:bg-purple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-light sm:w-auto"
+                                                    >
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         </div>

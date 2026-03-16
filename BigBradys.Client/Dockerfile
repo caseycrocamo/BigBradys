@@ -24,8 +24,9 @@ RUN apt-get update -qq && \
 COPY package-lock.json package.json ./
 RUN npm ci --include=dev
 
-# Copy application code
+## Copy application code, but DO NOT copy .env to ensure Docker ENV takes precedence
 COPY . .
+RUN rm -f .env
 
 # Build application
 RUN npm run build
@@ -42,6 +43,7 @@ COPY --from=build /app /app
 # Install serve globally (if not bundled, fallback to local)
 RUN npm install --omit=dev && npm install -g serve || true
 EXPOSE 3000
-ENV REACT_APP_API_ROOT=https://bigbradys-api.fly.dev/api 
+ENV REACT_APP_API_ROOT=https://bigbradys-api.fly.dev/api
+## Docker ENV above will override .env for React builds
 # Use PORT env variable if set, otherwise default to 3000
 CMD ["sh", "-c", "serve -s build -l \"${PORT:-3000}\""]
