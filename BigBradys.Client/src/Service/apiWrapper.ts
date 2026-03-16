@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 const apiRoot =
     process.env.REACT_APP_API_ROOT || 'http://localhost:4000/api';
 
