@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { getBackofficeContactForms } from "../Service/contactForm";
+import Card from "../Components/Card";
 
 type ContactFormSubmission = {
     _id?: string;
@@ -18,124 +19,148 @@ export default function Backoffice() {
     const [isLoading, setIsLoading] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [error, setError] = useState("");
+    const [expandedId, setExpandedId] = useState<string | number | null>(null);
 
-    const loadSubmissions = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const formatName = (s: ContactFormSubmission) => {
+        const name = `${s.firstName || ""} ${s.lastName || ""}`.trim();
+        const pet = (s.petName || "").trim();
+        if (!name && !pet) return "—";
+        return pet ? `${name || "Owner"} (${pet})` : name;
+    };
+
+    const val = (v?: string) => (v?.trim() || "—");
+
+    const handleLock = () => {
+        setIsAuthenticated(false);
+        setSubmissions([]);
+        setPassword("");
+        setError("");
+    };
+
+    const handleUnlock = async (e: React.FormEvent) => {
+        e.preventDefault();
         setIsLoading(true);
         setError("");
         try {
-            const response = await getBackofficeContactForms(password);
-            setSubmissions(Array.isArray(response.data) ? response.data : []);
+            const res = await getBackofficeContactForms(password);
+            setSubmissions(Array.isArray(res.data) ? res.data : []);
             setIsAuthenticated(true);
         } catch (err: any) {
-            setIsAuthenticated(false);
-            if (err?.response?.status === 401) {
-                setError("Incorrect password.");
-            } else {
-                setError("Unable to load submissions right now.");
-            }
+            setError(err?.response?.status === 401 ? "Wrong password" : "Failed to load");
         } finally {
             setIsLoading(false);
         }
     };
 
+    if (!isAuthenticated) {
+        return (
+            <div className="min-h-[60vh] flex items-center justify-center px-4">
+                <div className="max-w-lg w-2/6">
+                    <div className="h-1 bg-gradient-to-r from-purple to-purple-light rounded-t" />
+                    <form onSubmit={handleUnlock} className="bg-white rounded-b shadow-lg p-6">
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-purple-light focus:border-transparent"
+                            autoFocus
+                            required
+                        />
+                        {error && <p className="mt-2 text-xs text-red-600">{error}</p>}
+                        <button
+                            type="submit"
+                            disabled={isLoading}
+                            className="mt-4 block w-full py-2 bg-purple text-white text-sm font-medium rounded hover:bg-purple-dark focus:outline-none focus:ring-2 focus:ring-purple-light focus:ring-offset-2 disabled:opacity-50"
+                        >
+                            {isLoading ? "..." : "Unlock"}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        );
+    }
+
+    const tableContent = (
+        <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+                <thead>
+                    <tr className="border-b border-gray-200 bg-gray-50 text-left text-xs text-gray-500 uppercase tracking-wide">
+                        <th className="px-4 py-3 font-medium">Name</th>
+                        <th className="px-4 py-3 font-medium">Email</th>
+                        <th className="px-4 py-3 font-medium">Phone</th>
+                        <th className="px-4 py-3 font-medium">Subject</th>
+                        <th className="px-4 py-3 font-medium">Message</th>
+                    </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                    {submissions.length === 0 ? (
+                        <tr>
+                            <td colSpan={5} className="px-4 py-12 text-center text-gray-400">
+                                No submissions
+                            </td>
+                        </tr>
+                    ) : (
+                        submissions.map((s, i) => (
+                            <tr key={s._id || i}>
+                                <td className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                    {formatName(s)}
+                                </td>
+                                <td className="px-4 py-4 text-gray-600 font-mono text-xs whitespace-nowrap">
+                                    {val(s.email)}
+                                </td>
+                                <td className="px-4 py-4 text-gray-600 font-mono text-xs whitespace-nowrap">
+                                    {val(s.phoneNumber)}
+                                </td>
+                                <td className="px-4 py-4 text-gray-600 whitespace-nowrap">
+                                    {val(s.subject)}
+                                </td>
+                                <td 
+                                    className={`px-4 py-4 text-gray-600 max-w-md cursor-pointer ${expandedId === (s._id || i) ? '' : 'truncate'}`}
+                                    onClick={() => setExpandedId(expandedId === (s._id || i) ? null : (s._id || i))}
+                                >
+                                    {val(s.message)}
+                                </td>
+                            </tr>
+                        ))
+                    )}
+                </tbody>
+            </table>
+        </div>
+    );
+
     return (
-        <div className="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
-            <div className="border-4 border-dashed border-gray-200 rounded-lg p-6 sm:p-8">
-                <div className="sm:flex sm:items-center sm:justify-between">
-                    <div>
-                        <h1 className="text-3xl font-extrabold text-warm-gray-900">Backoffice</h1>
-                        <p className="mt-2 text-sm text-warm-gray-500">
-                            Enter the shared password to view contact form submissions.
-                        </p>
+        <div className="px-4">
+            {/* Hero - same pattern as About.tsx */}
+            <div className="relative bg-purple-dark">
+                <div className="absolute inset-0">
+                    <img
+                        className="w-full h-full object-cover"
+                        src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=1600&q=80"
+                        alt=""
+                    />
+                    <div className="absolute inset-0 bg-purple-dark mix-blend-multiply bg-opacity-40" aria-hidden="true" />
+                </div>
+                <div className="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
+                    <div className="flex items-start justify-between">
+                        <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+                            Contact Form Submissions
+                        </h1>
+                        <button
+                            onClick={handleLock}
+                            className="mt-2 px-4 py-2 text-sm font-medium text-purple-dark bg-white hover:bg-purple-lightest rounded-md shadow"
+                        >
+                            Lock
+                        </button>
                     </div>
                 </div>
-
-                {!isAuthenticated ? (
-                    <form className="mt-8 max-w-xl" onSubmit={loadSubmissions}>
-                        <label htmlFor="backoffice-password" className="block text-sm font-medium text-warm-gray-900">
-                            Password
-                        </label>
-                        <div className="mt-2 flex flex-col gap-3 sm:flex-row">
-                            <input
-                                id="backoffice-password"
-                                type="password"
-                                className="block w-full rounded-md border-warm-gray-300 shadow-sm focus:border-purple focus:ring-purple-light"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                            <button
-                                type="submit"
-                                disabled={isLoading}
-                                className="inline-flex items-center justify-center rounded-md border border-transparent bg-purple-light px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-purple focus:outline-none focus:ring-2 focus:ring-purple-light focus:ring-offset-2"
-                            >
-                                {isLoading ? "Checking..." : "Unlock"}
-                            </button>
-                        </div>
-                        {error && (
-                            <div className="mt-4 rounded-md bg-red-50 p-3">
-                                <p className="text-sm font-medium text-red-800">{error}</p>
-                            </div>
-                        )}
-                    </form>
-                ) : (
-                    <div className="mt-8">
-                        <div className="sm:flex sm:items-center sm:justify-between">
-                            <h2 className="text-lg font-semibold text-warm-gray-900">Contact submissions</h2>
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    setIsAuthenticated(false);
-                                    setSubmissions([]);
-                                    setPassword("");
-                                    setError("");
-                                }}
-                                className="mt-3 sm:mt-0 inline-flex items-center justify-center rounded-md border border-warm-gray-300 bg-white px-4 py-2 text-sm font-medium text-warm-gray-700 shadow-sm hover:bg-warm-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-light focus:ring-offset-2"
-                            >
-                                Lock
-                            </button>
-                        </div>
-
-                        <div className="mt-4 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                            <table className="min-w-full divide-y divide-gray-300">
-                                <thead className="bg-warm-gray-50">
-                                    <tr>
-                                        <th className="py-3.5 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wider text-warm-gray-600 sm:pl-6">Name</th>
-                                        <th className="px-3 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-warm-gray-600">Email</th>
-                                        <th className="px-3 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-warm-gray-600">Phone</th>
-                                        <th className="px-3 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-warm-gray-600">Subject</th>
-                                        <th className="px-3 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-warm-gray-600">Message</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-200 bg-white">
-                                    {submissions.map((submission, index) => (
-                                        <tr key={submission._id || index}>
-                                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-warm-gray-900 sm:pl-6">
-                                                {(submission.firstName || "").trim()} {(submission.lastName || "").trim()}
-                                                {submission.petName ? (
-                                                    <span className="ml-1 text-warm-gray-500">({submission.petName})</span>
-                                                ) : null}
-                                            </td>
-                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-warm-gray-700">{submission.email || "-"}</td>
-                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-warm-gray-700">{submission.phoneNumber || "-"}</td>
-                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-warm-gray-700">{submission.subject || "-"}</td>
-                                            <td className="px-3 py-4 text-sm text-warm-gray-700 max-w-md">{submission.message || "-"}</td>
-                                        </tr>
-                                    ))}
-                                    {submissions.length === 0 && (
-                                        <tr>
-                                            <td className="px-3 py-8 text-center text-sm text-warm-gray-500" colSpan={5}>
-                                                No submissions yet.
-                                            </td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                )}
             </div>
+
+            {/* Table in Card component */}
+            <Card 
+                header={`${submissions.length} ${submissions.length === 1 ? "Submission" : "Submissions"}`}
+                body={tableContent}
+            />
         </div>
     );
 }
