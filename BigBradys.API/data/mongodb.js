@@ -24,4 +24,28 @@ const createForm = async (form) => {
     return response;
   }
 }
+const getForms = async () => {
+  let response = {
+    successful: false,
+    data: null
+  }
+  try{
+    await client.connect();
+    const result = await client
+      .db('bigbradys')
+      .collection('contactFormSubmissions')
+      .find({})
+      .sort({ _id: -1 })
+      .toArray();
+    response.successful = true;
+    response.data = result;
+    return response;
+  }
+  catch(e){
+    console.error(e);
+    response.data = e;
+    return response;
+  }
+}
 exports.createForm = createForm
+exports.getForms = getForms

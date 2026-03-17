@@ -1,0 +1,10 @@
+{
+  "name": "bigbradys-root",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -k -n API,CLIENT -c blue,green \"npm --prefix BigBradys.API start\" \"npm --prefix BigBradys.Client run dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

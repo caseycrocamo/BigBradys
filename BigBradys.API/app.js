@@ -11,6 +11,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 const contactFormHandler = require('./commands/contactform/handleContactFormSubmission');
+const getContactFormsHandler = require('./commands/contactform/handleGetContactForms');
 
 var app = express();
 
@@ -30,6 +31,32 @@ app.use('/users', usersRouter);
 
 app.post('/api/contactform', async function(req, res) {
     let serviceResponse = await contactFormHandler.handleContactFormSubmission(req.body);
+    if(serviceResponse.successful){
+        res.statusCode = 200;
+    }
+    else {
+        res.statusCode = 500;
+    }
+    res.send(serviceResponse.data);
+});
+
+app.post('/api/backoffice/contactforms', async function(req, res) {
+    const password = req.body && req.body.password ? req.body.password : '';
+    const expectedPassword = process.env.BACKOFFICE_PASSWORD;
+
+    if(!expectedPassword){
+        res.statusCode = 500;
+        res.send('Backoffice password is not configured on the server.');
+        return;
+    }
+
+    if(password !== expectedPassword){
+        res.statusCode = 401;
+        res.send('Invalid password.');
+        return;
+    }
+
+    let serviceResponse = await getContactFormsHandler.handleGetContactForms();
     if(serviceResponse.successful){
         res.statusCode = 200;
     }

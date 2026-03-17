@@ -2,10 +2,8 @@
 import { MailIcon, PhoneIcon } from '@heroicons/react/outline'
 import ContactForm from '../Domain/ContactForm';
 import {submitContactForm} from '../Service/contactForm';
-import apiResponse from "../Domain/apiResponse";
-import { alertType } from "../Domain/enum";
 
-export default function Contact(props: any) {
+export default function Contact() {
     const [petName, setPetName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -14,23 +12,33 @@ export default function Contact(props: any) {
     const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
     const [submitted, setSubmitted] = useState(false);
-    const setAlertOpen = props.setAlertOpen;
-    const setAlertType = props.setAlertType;
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState('');
 
-    const handleSubmit = (e:any) => {
+    const handleSubmit = async (e:any) => {
         e.preventDefault();
+        setIsSubmitting(true);
+        setSubmitError('');
         const contactForm = new ContactForm(firstName, lastName, petName, email, phoneNumber, subject, message);
-        submitContactForm(contactForm).then(function (response:any) {
-            if(response.status === 200){ 
-                setAlertType(alertType.success);
-                setAlertOpen(true);
+        try {
+            const response = await submitContactForm(contactForm);
+            if(response.status === 200){
                 setSubmitted(true);
+                setPetName('');
+                setFirstName('');
+                setLastName('');
+                setEmail('');
+                setPhoneNumber('');
+                setSubject('');
+                setMessage('');
+            } else {
+                setSubmitError('We could not submit your message. Please try again.');
             }
-        })
-        .catch(function (error:any) {
-            alert(error);
-            return new apiResponse(false, null);
-        });        
+        } catch (error:any) {
+            setSubmitError('We could not submit your message right now. Please try again in a moment.');
+        } finally {
+            setIsSubmitting(false);
+        }
     }
     return (
         <div className="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
@@ -206,30 +214,55 @@ export default function Contact(props: any) {
                                 {/* Contact form or thank you message */}
                                 <div className="py-10 px-6 sm:px-10 lg:col-span-2 xl:p-12">
                                     {submitted ? (
-                                        <div className="max-w-lg mx-auto text-center">
-                                            <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-b from-purple to-purple-dark mb-8">
-                                                <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                                </svg>
+                                        <div className="max-w-2xl mx-auto">
+                                            <div className="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200">
+                                                <div className="px-6 py-7 sm:px-8 bg-gradient-to-r from-purple-lightest to-white">
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="flex items-center justify-center h-14 w-14 rounded-full bg-gradient-to-b from-purple to-purple-dark shadow">
+                                                            <svg className="h-7 w-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                                            </svg>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-xs font-semibold uppercase tracking-wide text-purple-light">Sent successfully</p>
+                                                            <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-gray-900">
+                                                                Message received — thank you!
+                                                            </h3>
+                                                        </div>
+                                                    </div>
+                                                    <p className="mt-4 text-base sm:text-lg text-gray-600">
+                                                        Your note is in our inbox and we’ll be in touch soon.
+                                                    </p>
+                                                    <hr className="mt-6 border-2 border-purple-light opacity-40 border-dashed max-w-sm" />
+                                                </div>
+                                                <div className="px-6 py-6 sm:px-8">
+                                                    <p className="text-sm sm:text-base text-gray-600">
+                                                        While you wait, check out our{' '}
+                                                        <a href="/products" className="text-purple-light font-semibold hover:underline">
+                                                            products
+                                                        </a>{' '}
+                                                        or follow us on social media for fresh updates.
+                                                    </p>
+                                                    <div className="mt-6">
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setSubmitted(false)}
+                                                            className="inline-flex items-center justify-center px-5 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-light hover:bg-purple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-light"
+                                                        >
+                                                            Send another message
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <h3 className="text-3xl font-extrabold tracking-tight text-gray-900 mb-4">
-                                                Message Received!
-                                            </h3>
-                                            <p className="text-lg text-gray-500 mb-8">
-                                                Thanks for getting in touch. We'll review your message and get back to you within 1-2 business days.
-                                            </p>
-                                            <hr className="border-gray-200 mb-8" />
-                                            <p className="text-base text-gray-500">
-                                                In the meantime, feel free to check out our{' '}
-                                                <a href="/products" className="text-purple-light font-medium hover:underline">
-                                                    products
-                                                </a>{' '}
-                                                or follow us on social media.
-                                            </p>
                                         </div>
                                     ) : (
                                         <>
                                             <h3 className="text-lg font-medium text-warm-gray-900">Send us a message</h3>
+                                            {submitError && (
+                                                <div className="mt-4 rounded-md bg-red-50 p-4" role="alert">
+                                                    <p className="text-sm font-medium text-red-800">{submitError}</p>
+                                                </div>
+                                            )}
                                             <form action="#" className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8" onSubmit={handleSubmit}>
                                                 {/* Name */}
                                                 <div className="sm:col-span-2">
@@ -364,9 +397,10 @@ export default function Contact(props: any) {
                                                 <div className="sm:col-span-2 sm:flex sm:justify-end">
                                                     <button
                                                         type="submit"
+                                                        disabled={isSubmitting}
                                                         className="mt-2 w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-purple-light hover:bg-purple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-light sm:w-auto"
                                                     >
-                                                        Submit
+                                                        {isSubmitting ? 'Submitting...' : 'Submit'}
                                                     </button>
                                                 </div>
                                             </form>

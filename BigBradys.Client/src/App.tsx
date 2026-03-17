@@ -4,28 +4,23 @@ import {
   Route,
   NavLink
 } from "react-router-dom";
-import React, { useState } from 'react'
+import React from 'react'
 import { Disclosure } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
-import Alert from "./Components/Alert";
 import navigationItem from "./Constants/NavigationItem";
 import Contact from "./Pages/Contact";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
-import { alertType as alertTypes } from './Domain/enum';
 import Products from "./Pages/Products";
-
-const profile = ['Your Profile', 'Settings', 'Sign out']
+import Backoffice from "./Pages/Backoffice";
 
 
 function App() {
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [alertType, setAlertType] = useState(null);
   const navigationItems:navigationItem[] = [
     new navigationItem("Home", "/", (<Home />)),
     new navigationItem("Products", "/products", (<Products />)),
     new navigationItem("Our Food", "/about", (<About />)),
-    new navigationItem("Contact Us", "/contact", (<Contact setAlertOpen={setAlertOpen} setAlertType={setAlertType}/>)),
+    new navigationItem("Contact Us", "/contact", (<Contact />)),
 ];
   return (
       <div>
@@ -39,11 +34,13 @@ function App() {
                         <div className="relative h-24 flex items-center justify-between">
                           <div className="px-2 flex items-center lg:px-0">
                             <div className="flex-shrink-0">
-                              <img
-                                  className="block h-24"
-                                  src="/logo.png"
-                                  alt="Workflow"
-                              />
+                              <NavLink to="/" exact>
+                                <img
+                                    className="block h-24"
+                                    src="/logo.png"
+                                    alt="Big Brady's logo"
+                                />
+                              </NavLink>
                             </div>
                             <div className="hidden md:block md:ml-10">
                               <div className="flex space-x-4">
@@ -73,18 +70,6 @@ function App() {
                               <NavLink className="hover:bg-purple hover:bg-opacity-75 hover:text-white rounded-md py-2 px-2 mx-2 text-sm font-medium" activeClassName="bg-purple text-white rounded-md py-2 px-3 text-sm font-medium" key={itemIdx} to={item.route} exact>{item.name}</NavLink>
                           )}
                         </div>
-                          <div className="mt-3 px-2 space-y-1 align-right">
-                            {profile.map((item) => (
-                                <a
-                                    key={item}
-                                    href="#"
-                                    className="block rounded-md py-2 px-3 text-base font-medium hover:bg-purple hover:text-white hover:bg-opacity-75"
-                                >
-                                  {item}
-                                </a>
-                            ))}
-                            
-                          </div>
                       </Disclosure.Panel>
                     </>
                 )}
@@ -100,13 +85,14 @@ function App() {
                         {item.jsx}
                       </Route>
                   )}
+                  <Route exact path="/backoffice">
+                    <Backoffice />
+                  </Route>
                 </Switch>
               </div>
             </main>
           </div>
       </Router>
-      {alertOpen && (<Alert alertType={alertType}/>)}
-    
     </div>
   );
 }

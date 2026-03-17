@@ -26,7 +26,7 @@
                                     Big Brady's hand-made dog food. Made with meat, veggies and love ♡.
                                 </p>
                                 <a
-                                    href="/about"
+                                    href="/products"
                                     className="inline-flex items-center text-purple-light font-medium hover:underline"
                                 >
                                     Learn more about our food →

@@ -1,8 +1,13 @@
 import {post} from "./apiWrapper";
 import ContactForm from "../Domain/ContactForm";
-import { contactForm } from "../Constants/endpoints";
+import { backofficeContactForms, contactForm } from "../Constants/endpoints";
 
 function submitContactForm(form: ContactForm):Promise<any>{
     return post(contactForm, form);
 }
-export {submitContactForm};
+
+function getBackofficeContactForms(password: string):Promise<any>{
+    return post(backofficeContactForms, { password });
+}
+
+export {submitContactForm, getBackofficeContactForms};
